@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import { DatePipe, NgClass, UpperCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Conference } from '../../models/conference';
-
+import { ConferenceDetails } from '../conference-details/conference-details';   
 @Component({
   selector: 'app-conference-list',
-  imports: [FormsModule, NgClass, UpperCasePipe, DatePipe],
+  imports: [FormsModule, NgClass, UpperCasePipe, DatePipe,ConferenceDetails],
   templateUrl: './conference-list.html',
   styleUrl: './conference-list.css',
 })
 export class ConferenceList {
   searchText = '';
-
+  selectedConference: Conference | null = null; 
   conferences: Conference[] = [
     {
       id: 1,
@@ -57,6 +57,10 @@ export class ConferenceList {
     return this.conferences.filter(
       (c) => c.date >= today && c.title.toLowerCase().includes(search)
     );
+  }
+
+  selectConference(c: Conference): void {                                      
+    this.selectedConference = c;
   }
 
   remainingPlaces(c: Conference): number {
